@@ -1,6 +1,6 @@
 Name:		python-datasets
 Version:	5.0.1
-Release:	1
+Release:	2
 Summary:	Hugging Face community library of datasets
 License:	Apache-2.0
 Group:		Development/Python
@@ -9,8 +9,9 @@ Source0:	https://files.pythonhosted.org/packages/source/d/datasets/datasets-%{ve
 BuildArch:	noarch
 BuildSystem:	python
 BuildRequires:	python
-BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(python3)
 BuildRequires:	python%{pyver}dist(pip)
+BuildRequires:	python%{pyver}dist(wheel)
 BuildRequires:	python%{pyver}dist(setuptools)
 
 Requires:	python%{pyver}dist(filelock)
