@@ -1,6 +1,6 @@
 Name:		python-datasets
-Version:	5.0.1
-Release:	2
+Version:	5.1.0
+Release:	1
 Summary:	Hugging Face community library of datasets
 License:	Apache-2.0
 Group:		Development/Python
@@ -19,8 +19,6 @@ Requires:	python%{pyver}dist(numpy)
 Requires:	python%{pyver}dist(pyarrow)
 Requires:	python%{pyver}dist(dill)
 Requires:	python%{pyver}dist(pandas)
-Requires:	python%{pyver}dist(requests)
-Requires:	python%{pyver}dist(httpx)
 Requires:	python%{pyver}dist(tqdm)
 Requires:	python%{pyver}dist(xxhash)
 Requires:	python%{pyver}dist(multiprocess)
@@ -34,16 +32,16 @@ Access and share datasets for audio, computer vision, and NLP. Used by
 TRL (ORPO, DPO, SFT) and other Hugging Face training tools.
 
 %prep -a
-# Cooker fsspec is 2026.7.0; upstream still caps at 2026.6.0.
+# Cooker fsspec is 2026.9.0; upstream 5.1.0 still caps at 2026.7.0.
 python - <<'PY'
 from pathlib import Path
 p = Path("setup.py")
 t = p.read_text()
-t = t.replace(
-    '"fsspec[http]>=2023.1.0,<=2026.6.0"',
-    '"fsspec[http]>=2023.1.0"',
-)
-p.write_text(t)
+old = '"fsspec[http]>=2023.1.0,<=2026.7.0"'
+new = '"fsspec[http]>=2023.1.0"'
+if old not in t:
+    raise SystemExit("datasets setup.py fsspec pin not found")
+p.write_text(t.replace(old, new, 1))
 print("patched datasets setup.py fsspec pin")
 PY
 
